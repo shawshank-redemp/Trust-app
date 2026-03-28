@@ -18,29 +18,29 @@ export default function App() {
   };
 
   const analyzeVideo = async () => {
-  if (!video) return;
+    if (!video) return;
 
-  setLoading(true);
+    setLoading(true);
 
-  const formData = new FormData();
-  formData.append("video", video);
+    const formData = new FormData();
+    formData.append("video", video);
 
-  try {
-    const res = await fetch("http://127.0.0.1:5000/upload", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const res = await fetch("http://127.0.0.1:5000/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    setScore(data.score);
-    setReasons(data.reasons);
-  } catch (error) {
-    console.error("Error:", error);
-  }
+      setScore(data.trust_score); // ✅ FIXED
+      setReasons(data.reasons || []); // ✅ SAFE
+    } catch (error) {
+      console.error("Error:", error);
+    }
 
-  setLoading(false);
-};
+    setLoading(false);
+  };
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f3f4f6", padding: "20px" }}>
